@@ -4,6 +4,7 @@
 # @contact: dg1533019@smail.nju.edu.cn
 # @file: cliffsDelta.py
 # @time: 2020/6/20 下午6:17
+# forked from neilernst/cliffsDelta
 
 from __future__ import division
 
