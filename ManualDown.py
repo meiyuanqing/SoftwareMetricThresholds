@@ -86,17 +86,6 @@ def manualDown(wd="/home/mei/RD/terapromise/scripts/ManualDown/data/",
                 df['bugBinary'] = df.bug.apply(lambda x: 1 if x > 0 else 0)
 
                 # 根据ManualDown(50%),预测从大到小，前50%(向上取整)为defective。
-                # # 思路是按规模从大到小取出第50%位置上的LOC值，再根据此值来预测
-                # sortedSLOC = sorted(df['loc'], reverse=True)
-                # # print("the sortedSLOC is ", sortedSLOC)
-                # slocLocation = int(df['loc'].count() / 2) - 1
-                # # 由于list从list[0]开始，所以slocLocation取整后要减取1
-                # slocThreshold = sortedSLOC[slocLocation]
-                # print("the slocThreshold is ", slocThreshold)
-                # # 这个方法有个缺陷，即当slocThreshold的值在中位数位置上前后有多个相当的值，会造成较大的误差
-                # df['predictBinary'] = df['loc'].apply(lambda x: 1 if x >= slocThreshold else 0)
-                # # print("the predictBinary is ", df['predictBinary'])
-
                 # 新增一列，按从大到小的loc值给每一行一个序号，然后取序号的前一半为defective,若个数为奇数，中位数位置上的也是defective
                 # 思路是按规模从大到小取出第50%位置上的LOC值，再根据此值来预测
                 sortedSLOC = sorted(df['loc'], reverse=True)
