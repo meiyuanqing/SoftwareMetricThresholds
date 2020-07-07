@@ -13,7 +13,6 @@ this script will generate the performance indicators of ManualDown model.
 [1]  zhou et al. how far...
 '''
 
-
 # 参数说明：
 #    (1) wd： 用于存放被训练的项目路径，默认值为"/home/mei/RD/terapromise/scripts/ManualDown/data/"；
 #    (2) rd： 用于存放模型预测性能指标，默认值是"/home/mei/RD/terapromise/scripts/ManualDown/thresholds/"。
