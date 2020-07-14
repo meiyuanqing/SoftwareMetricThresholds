@@ -85,7 +85,7 @@ def manualDown(wd="/home/mei/RD/terapromise/scripts/ManualDown/data/",
                 # 此次可调整lambda中条件参数，若x>2,则可预测bug为3个以上的阈值，其他类推
                 df['bugBinary'] = df.bug.apply(lambda x: 1 if x > 0 else 0)
 
-                # 根据ManualDown(50%),预测从大到小，前50%(向上取整)为defective。
+
                 # 新增一列，按从大到小的loc值给每一行一个序号，然后取序号的前一半为defective,若个数为奇数，中位数位置上的也是defective
                 # 思路是按规模从大到小取出第50%位置上的LOC值，再根据此值来预测
                 sortedSLOC = sorted(df['loc'], reverse=True)
@@ -121,11 +121,17 @@ def manualDown(wd="/home/mei/RD/terapromise/scripts/ManualDown/data/",
                 # 计算混淆矩阵时有些情况只能算出一个TN或TP的
                 tn, fp, fn, tp = confusionMatrix.ravel()
                 # 当tp且tn为零时，GM值为零，因为GM=(TPR*TNR)**0.5
+                if (tp + fn) == 0 and (tn + fp) == 0:
+                    GM = 0
                 if tp == 0 and tn == 0:
                     GM = 0
-                elif tp == 0 and tn != 0:
+                elif (tp + fn) == 0 and (tn + fp) != 0:
                     GM = (tn / (tn + fp)) ** 0.5
-                elif tp != 0 and tn == 0:
+                elif tp == 0 and (tn + fp) != 0:
+                    GM = (tn / (tn + fp)) ** 0.5
+                elif (tp + fn) != 0 and (tn + fp) == 0:
+                    GM = (tp / (tp + fn)) ** 0.5
+                elif (tp + fn) != 0 and tn == 0:
                     GM = (tp / (tp + fn)) ** 0.5
                 else:
                     GM = ((tp / (tp + fn)) * (tn / (tn + fp))) ** 0.5
